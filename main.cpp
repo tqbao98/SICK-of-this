@@ -33,7 +33,7 @@ int main() {
 					thread ThrObj(&ScanDataFrame::Timer, data, mainmemory, mainturnoff);
 					ThrObj.detach();
 				}
-			} mainturnoff = true;
+			} else {mainturnoff = true; system("xset dpms force off");}
 
 
 			delete[] receiveBuffer;
