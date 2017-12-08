@@ -162,7 +162,6 @@ bool ScanDataFrame::Timer(bool memory, bool turnoff) {
 			break;
 		}
 	}
-	cout << "It's opened dude";
 	system("xset dpms force on");
 	memory = false;
 	return memory, turnoff;
