@@ -22,16 +22,16 @@ int main() {
 			myTcp.sendSOPASCommand("\x02sEN  LMDscandata 1\x03\0");
 			//myTcp.sendSOPASCommand("\x02sWN LMPoutputRange 1 2710 FFF92230 225510\x03\0");
 
-			int result = myTcp.get_datagram(receiveBuffer, 65536, &actual_length);
+			myTcp.get_datagram(receiveBuffer, 65536, &actual_length);
 
-			cout << receiveBuffer << endl;
+			std::cout << receiveBuffer << std::endl;
 
 			data.ParseDatagram(receiveBuffer, actual_length);
 			data.Section(maintrigger);
 			if (maintrigger == true) {
 				if (mainmemory == false) {
-					thread ThrObj(&ScanDataFrame::Timer, data, mainmemory, mainturnoff);
-					ThrObj.detach();
+					std::thread ThrObj(&ScanDataFrame::Timer, data, mainmemory, mainturnoff);
+					ThrObj.std::thread::detach();
 				}
 			}
 			else {
