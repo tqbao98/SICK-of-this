@@ -152,7 +152,7 @@ int SickTimCommonTcp::readWithTimeout(size_t timeout_ms, char *buffer, int buffe
 	}
 
 	// Avoid a buffer overflow by limiting the data we read
-	size_t to_read = bytes_transfered_ > buffer_size - 1 ? buffer_size - 1 : bytes_transfered_;
+	signed int to_read = bytes_transfered_ > buffer_size - 1 ? buffer_size - 1 : bytes_transfered_;
 	std::istream istr(&input_buffer_);
 	if (buffer != 0)
 	{
