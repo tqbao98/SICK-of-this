@@ -142,7 +142,6 @@ bool ScanDataFrame::SaveToFile(const char* filename)
 bool ScanDataFrame::Section(bool trigger) {
 		for (int i = 350; i <= 450; i++) {
 			if (m_points[i].range <= 150 && m_points[i].range >= 30) {
-				cout << "Hello hello hello" << endl;
 				trigger = true; //global var
 				break;
 				}
@@ -151,11 +150,15 @@ bool ScanDataFrame::Section(bool trigger) {
 		return trigger;
 }
 
-bool ScanDataFrame::Timer(bool memory, bool turnoff) {
+std::pair <bool, bool> ScanDataFrame::Timer(bool memory, bool turnoff) {
+	pair <bool, bool> tuple;
+	tuple.first = memory;
+	tuple.second = turnoff;
 	time(&start);
 	while ((double)(clock() - start) / CLOCKS_PER_SEC <= 3)
 	{
-		if (turnoff == true) {
+		if (turnoff == true)
+		{
 			start = 4;
 			turnoff = false;
 			memory = false;
@@ -164,6 +167,6 @@ bool ScanDataFrame::Timer(bool memory, bool turnoff) {
 	}
 	system("xset dpms force on");
 	memory = false;
-	return memory, turnoff;
+	return tuple;
 }
 

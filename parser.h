@@ -10,6 +10,7 @@
 #include <math.h>
 #include <chrono>
 #include <ctime>
+#include <utility>
 //#include <errno.h>
 //#include <fcntl.h>
 
@@ -53,7 +54,7 @@ public:
 	bool ReadFromFile(const char* filename);
 	bool SaveToFile(const char* filename);
 	bool Section(bool trigger);
-	bool Timer(bool, bool);
+	std::pair <bool, bool> Timer(bool, bool);
 
 	void SetTimeStampToCurrentTime() {
 		m_time_stamp = std::chrono::high_resolution_clock::now();

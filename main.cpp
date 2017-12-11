@@ -22,7 +22,7 @@ int main() {
 			myTcp.sendSOPASCommand("\x02sEN  LMDscandata 1\x03\0");
 			//myTcp.sendSOPASCommand("\x02sWN LMPoutputRange 1 2710 FFF92230 225510\x03\0");
 
-			myTcp.get_datagram(receiveBuffer, 65536, &actual_length);
+			int result = myTcp.get_datagram(receiveBuffer, 65536, &actual_length);
 
 			cout << receiveBuffer << endl;
 
@@ -33,7 +33,10 @@ int main() {
 					thread ThrObj(&ScanDataFrame::Timer, data, mainmemory, mainturnoff);
 					ThrObj.detach();
 				}
-			} else {mainturnoff = true; system("xset dpms force off");}
+			}
+			else {
+				mainturnoff = true; system("xset dpms force off");
+			}
 
 
 			delete[] receiveBuffer;
