@@ -4,7 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <boost/asio.hpp>
-#include <boost/asio.hpp>
 #include <boost/lambda/lambda.hpp>
 #include <algorithm>
 #include <iterator>

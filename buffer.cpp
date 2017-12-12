@@ -1,4 +1,4 @@
-#include "BUFFER.h"
+#include "buffer.h"
 #include <iostream>
 
 //reference data types changed

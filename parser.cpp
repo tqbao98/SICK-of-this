@@ -1,7 +1,6 @@
 #include "parser.h"
 #include <iostream>
 
-
 using namespace std;
 
 static int ReadNextField(char* source_buffer, int source_length, int index, char* store_buffer)
