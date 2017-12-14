@@ -4,46 +4,44 @@
 #include <thread>
 
 int main() {
-	
-	
-		/*unsigned char* receiveBuffer = new char[65536];*/
+	/*unsigned char* receiveBuffer = new char[65536];*/
 	bool maintrigger = false, mainmemory = false, mainturnoff = true;
-	system("xset dpms force off");
+	//system("xset dpms force off");
+	cout << "hello";
 	
+	for (int loop = 0; loop = 1500; loop++) {
+	int actual_length = 0;
+	char* receiveBuffer = new char[65536];
+	ScanDataFrame data;
+	SickTimCommonTcp myTcp(5000);
 
+	myTcp.init_device();
+	myTcp.sendSOPASCommand("\x02sEN  LMDscandata 1\x03\0");
+	//myTcp.sendSOPASCommand("\x02sWN LMPoutputRange 1 2710 FFF92230 225510\x03\0");
 
-	for (int loop = 0; loop == 1500; loop++) {
-		int actual_length = 0;
-		char* receiveBuffer = new char[65536];
-		ScanDataFrame data;
-		SickTimCommonTcp myTcp(5000);
+	myTcp.get_datagram(receiveBuffer, 65536, &actual_length);
 
-			myTcp.init_device();
-			myTcp.sendSOPASCommand("\x02sEN  LMDscandata 1\x03\0");
-			//myTcp.sendSOPASCommand("\x02sWN LMPoutputRange 1 2710 FFF92230 225510\x03\0");
+	//std::cout << receiveBuffer << std::endl;
 
-			myTcp.get_datagram(receiveBuffer, 65536, &actual_length);
-
-			std::cout << receiveBuffer << std::endl;
-
-			data.ParseDatagram(receiveBuffer, actual_length);
-			data.Section(maintrigger);
-			if (maintrigger == true) {
-				if (mainmemory == false) {
-					std::thread ThrObj(&ScanDataFrame::Timer, data, mainmemory, mainturnoff);
-					ThrObj.std::thread::detach();
-				}
-			}
-			else {
-				mainturnoff = true; system("xset dpms force off");
-			}
-
-
-			delete[] receiveBuffer;
-
-			if (actual_length <= 0) return main();
-
-			myTcp.close_device();
+	data.ParseDatagram(receiveBuffer, actual_length);
+	data.Section(maintrigger);
+	/*if (maintrigger == true) {
+		if (mainmemory == false) {
+			cout << "alo";
+			std::thread ThrObj(&ScanDataFrame::Timer, data, mainmemory, mainturnoff);
+			ThrObj.std::thread::detach();
 		}
-		return 0;
+	}*/
+	/*else {
+		mainturnoff = true; //system("xset dpms force off");
+	}*/
+
+
+	delete[] receiveBuffer;
+
+	if (actual_length <= 0) return main();
+
+	myTcp.close_device();
+}
+			return 0;
 }

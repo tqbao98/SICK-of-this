@@ -72,24 +72,24 @@ void ScanDataFrame::ParseDatagram(char* buffer, int buffer_length)
 
 	sscanf(fields[23].c_str(), "%x", &temp);
 	m_start_angle = (float)temp / 10000;
-	cout << " + Start angle: " << m_start_angle << endl;
+	//cout << " + Start angle: " << m_start_angle << endl;
 
 	sscanf(fields[24].c_str(), "%x", &temp);
 	m_angular_step = (float)temp / 10000;
-	cout << " + Angular step: " << m_angular_step << endl;
+	//cout << " + Angular step: " << m_angular_step << endl;
 
 	sscanf(fields[25].c_str(), "%x", &m_num_points);
-	cout << " + Number of data points: " << m_num_points << endl;
+	//cout << " + Number of data points: " << m_num_points << endl;
 
 	m_end_angle = m_start_angle + (m_num_points - 1)*m_angular_step;
-	cout << " + End angle: " << m_end_angle << endl;
+	//cout << " + End angle: " << m_end_angle << endl;
 
 	m_points = new data_point_t[m_num_points];
 	int offset = 26;
 	for (int i = 0; i < m_num_points; ++i) {
 		sscanf(fields[offset + i].c_str(), "%x", &temp);
 		m_points[i].range = (uint16_t)temp;
-		DEBUG_PRINT("range[%d] = %d", i, m_points[i].range);
+		//DEBUG_PRINT("range[%d] = %d", i, m_points[i].range);
 		m_points[i].intensity = 0;
 	}
 	for (; offset < (int)fields.size(); ++offset) {
@@ -140,7 +140,8 @@ bool ScanDataFrame::SaveToFile(const char* filename)
 
 bool ScanDataFrame::Section(bool trigger) {
 		for (int i = 350; i <= 450; i++) {
-			if (m_points[i].range <= 150 && m_points[i].range >= 30) {
+			if (m_points[i].range <= 1000 && m_points[i].range >= 50) {
+				cout << "hello stupidddddd";
 				trigger = true; //global var
 				break;
 				}
@@ -151,6 +152,7 @@ bool ScanDataFrame::Section(bool trigger) {
 
 std::pair <bool, bool> ScanDataFrame::Timer(bool memory, bool turnoff) {
 	pair <bool, bool> tuple;
+	cout << "its onnnnn";
 	tuple.first = memory;
 	tuple.second = turnoff;
 	time(&start);
@@ -165,6 +167,7 @@ std::pair <bool, bool> ScanDataFrame::Timer(bool memory, bool turnoff) {
 		}
 	}
 	system("xset dpms force on");
+	cout << "its on";
 	memory = false;
 	return tuple;
 }

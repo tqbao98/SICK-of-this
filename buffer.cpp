@@ -51,7 +51,7 @@ int SickTimCommonTcp::init_device()
 		//deadline_.expires_from_now(boost::posix_time::seconds(/*timelimit_*/5000));
 		//ec = boost::asio::error::would_block;
 		
-		cout << "connecting to " << repr.c_str() << endl;
+		//cout << "connecting to " << repr.c_str() << endl;
 		boost::asio::connect(socket_, iterator); //asynchronous
 
 		//// Wait until timeout
@@ -60,7 +60,7 @@ int SickTimCommonTcp::init_device()
 		if (!ec && socket_.is_open())
 		{
 			success = true;
-			cout << "connected" << endl;
+			//cout << "connected" << endl;
 			break;
 		}
 		cout << "failed to connect to " << repr.c_str() << endl;
@@ -147,6 +147,7 @@ int SickTimCommonTcp::readWithTimeout(size_t timeout_ms, char *buffer, int buffe
 
 	// Avoid a buffer overflow by limiting the data we read
 	size_t to_read = bytes_transfered_ > buffer_size - 1 ? buffer_size - 1 : bytes_transfered_;
+	size_t i = 0;
 	std::istream istr(&input_buffer_);
 	if (buffer != 0)
 	{
@@ -199,7 +200,7 @@ int SickTimCommonTcp::sendSOPASCommand(const char* request/*, std::vector<unsign
 	int bytes_read;
 	if (readWithTimeout(1000, buffer, BUF_SIZE, &bytes_read, 0) == -1)
 	{
-		cout << "sendSOPASCommand: no full reply available for read after 1s" << endl;
+		//cout << "sendSOPASCommand: no full reply available for read after 1s" << endl;
 		return -1;
 	}
 
@@ -232,7 +233,7 @@ int SickTimCommonTcp::get_datagram(char* receiveBuffer, int bufferSize, int* act
 
 	if (readWithTimeout(timeout, buffer, bufferSize, actual_length, &exception_occured) != 0)
 	{
-		cout << "get_datagram: no data available for read after "<< timeout << " ms" << endl;
+		//cout << "get_datagram: no data available for read after "<< timeout << " ms" << endl;
 			// Attempt to reconnect when the connection was terminated
 		if (!socket_.is_open())
 		{
